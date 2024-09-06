@@ -18,9 +18,15 @@ void addStudent(struct Student** head, int new_id, const char* new_name) {
     // Allocate memory for the new student
     struct Student* new_student = (struct Student*)malloc(sizeof(struct Student));
 
+    // Check if memory allocation was successful
+    if (new_student == NULL) {
+        printf("ERR: failed to allocate memory for a new student.\n");
+        return; // Exit the function if memory allocation fails
+    }
+
     // Fill in the fields of the new node (id and name)
     new_student->id = new_id; // Set the student's ID
-    strcpy(new_student->name, new_name); // Copy the student's name
+    strcpy_s(new_student->name, sizeof(new_student->name), new_name); // Copy the student's name, with sting length check
     new_student->next = NULL; // Set the next element to NULL as this is the last element
 
     // If the list is empty (head points to NULL)
@@ -83,7 +89,7 @@ int main() {
     struct Student* head = NULL; // Initialize the head pointer to NULL (the list is empty)
 
     // Print message the list of students is empty
-    printf("Students list is empty.\n");
+    printf("Students list.\n\nStudents list is empty.\n");
     printStudents(head);
 
     // Add 3 students to the list with ID 101, 102 and 103
@@ -92,7 +98,7 @@ int main() {
     addStudent(&head, 103, "Alexey");
 
     // Print the list of students before deletion
-    printf("Students list before removal:\n");
+    printf("\nStudents list before removal:\n");
     printStudents(head);
 
     // Delete the student with ID 102 example
